@@ -11,21 +11,33 @@ import NotificationsPage from 'Pages/notification';
 import LoginPage from 'Pages/users/login';
 import SignupPage from 'Pages/users/signup';
 
-export default function Router() {
+interface RouterProps {
+  isAuthenticated: boolean;
+}
+
+export default function Router({ isAuthenticated }: RouterProps) {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/posts" element={<PostListPage />} />
-      <Route path="/posts/:id" element={<PostDetailPage />} />
-      <Route path="/posts/new" element={<PostNew />} />
-      <Route path="/posts/edit/:id" element={<PostEdit />} />
-      <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/profile/edit" element={<ProfileEdit />} />
-      <Route path="/notifications" element={<NotificationsPage />} />
-      <Route path="/search" element={<SearchPage />} />
-      <Route path="/user/login" element={<LoginPage />} />
-      <Route path="/user/signup" element={<SignupPage />} />
-      <Route path="*" element={<Navigate replace to={'/'} />} />
+      {isAuthenticated ? (
+        <>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/posts" element={<PostListPage />} />
+          <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route path="/posts/new" element={<PostNew />} />
+          <Route path="/posts/edit/:id" element={<PostEdit />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/edit" element={<ProfileEdit />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="*" element={<Navigate replace to={'/'} />} />
+        </>
+      ) : (
+        <>
+          <Route path="/user/login" element={<LoginPage />} />
+          <Route path="/user/signup" element={<SignupPage />} />
+          <Route path="*" element={<Navigate replace to={'/user/login'} />} />
+        </>
+      )}
     </Routes>
   );
 }
