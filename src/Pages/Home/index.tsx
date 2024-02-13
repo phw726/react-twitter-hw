@@ -1,5 +1,9 @@
 import PostForm from 'Component/posts/PostForm';
 import PostBox from 'Component/posts/PostBox';
+import { useContext, useEffect, useState } from 'react';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import AuthContext from 'context/AuthContext';
+import { db } from 'firebaseApp';
 
 export interface PostProps {
   id: string;
@@ -13,59 +17,45 @@ export interface PostProps {
   comments?: any;
 }
 
-const posts: PostProps[] = [
-  {
-    id: '1',
-    email: 'phw726@naver.com',
-    content: 'Hello World',
-    createdAt: '2020-01-01',
-    uid: '123123',
-  },
-  {
-    id: '2',
-    email: 'fdhw726@naver.com',
-    content: 'Hello World',
-    createdAt: '2020-01-01',
-    uid: '456423',
-  },
-  {
-    id: '3',
-    email: 'phasd26@naver.com',
-    content: 'Hello World',
-    createdAt: '2020-01-01',
-    uid: '789456',
-  },
-  {
-    id: '4',
-    email: 'sadsdph6@naver.com',
-    content: 'Hellw72o World',
-    createdAt: '2020-01-01',
-    uid: '17893',
-  },
-  {
-    id: '5',
-    email: 'asdfs@naver.com',
-    content: 'Hello World',
-    createdAt: '2020-01-01',
-    uid: '7897823',
-  },
-];
-
 export default function HomePage() {
+  const [posts, setPosts] = useState<PostProps[]>([]);
+  const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (user) {
+      let postsRef = collection(db, 'posts');
+      let postsQuery = query(postsRef, orderBy('createdAt', 'desc'));
+
+      onSnapshot(postsQuery, snapShot => {
+        let dataObj = snapShot.docs.map(doc => ({
+          ...doc.data(),
+          id: doc?.id,
+        }));
+        setPosts(dataObj as PostProps[]);
+      });
+    }
+  }, [user]);
+
   return (
     <div className="home">
-      <div className="home__title">HOME</div>
-      <div className="home__tabs">
-        <div className="home__tab home__tab--active">For You</div>
-        <div className="home__tab ">Following</div>
+      <div className="home__top">
+        <div className="home__title">HOME</div>
+        <div className="home__tabs">
+          <div className="home__tab home__tab--active">For You</div>
+          <div className="home__tab ">Following</div>
+        </div>
       </div>
 
       <PostForm />
 
       <div className="post">
-        {posts?.map(post => (
-          <PostBox post={post} key={post?.id} />
-        ))}
+        {posts?.length > 0 ? (
+          posts?.map(post => <PostBox post={post} key={post?.id} />)
+        ) : (
+          <div className="post__no-posts">
+            <div className="post__text">게시글이 없습니다.</div>
+          </div>
+        )}
       </div>
     </div>
   );

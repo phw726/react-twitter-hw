@@ -47,6 +47,19 @@ body {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
+.transparent {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.sticky {
+  width: 100%;
+  position: sticky;
+  max-width: 600px;
+  margin: 0 auto;
+  top: 0;
+}
+
 // footer //
 .footer {
   position: fixed;
@@ -82,19 +95,28 @@ body {
 /// home  레이아웃 ///
 
 .home {
+  &__top {
+    @extend .transparent;
+    @extend .sticky;
+  }
+
   &__title {
+    background-color: transparent;
+    width: 100%;
     padding: 16px;
     font-weight: 700;
     font-size: 20px;
   }
 
   &__tabs {
+    background-color: transparent;
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   &__tab {
+    background-color: transparent;
     text-align: center;
     font-weight: 500;
     padding: 16px;
@@ -172,7 +194,48 @@ body {
 
 // 포스트 레이아웃 //
 .post {
+  &__header {
+    button {
+      border: none;
+      padding: 12px;
+      background-color: $activeBackground;
+      width: 100%;
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    &-btn {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      background-color: $activeBackground;
+      display: flex;
+    }
+
+    &-text {
+      margin-left: 4px;
+      font-size: 12px;
+      text-align: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: $activeBackground;
+      padding-top: 2px;
+    }
+  }
+
   padding-bottom: 40px;
+
+  &__no-posts {
+    padding: 16px;
+
+    .post__text {
+      font-size: 14px;
+      border: 1px solid $gray;
+      padding: 16px;
+      border-radius: 4px;
+      text-align: center;
+    }
+  }
 
   &__flex {
     display: flex;
@@ -331,5 +394,29 @@ body {
 
   &__error {
     color: rgb(254, 93, 93);
+  }
+
+  &__btn--google {
+    @extend .form__btn--submit;
+    background-color: $white;
+    color: $activeBorder;
+
+    &:hover,
+    &:focus {
+      background-color: $promaryColor;
+      color: $white;
+    }
+  }
+
+  &__btn--github {
+    @extend .form__btn--submit;
+    background-color: black;
+    color: $white;
+
+    &:hover,
+    &:focus {
+      background-color: $activeBackground;
+      color: $white;
+    }
   }
 }
