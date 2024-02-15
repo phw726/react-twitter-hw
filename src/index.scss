@@ -1,4 +1,5 @@
-$background: #1e293b;
+$background: hsl(217, 33%, 17%);
+$backgroundLight: #243246;
 $activeBackground: #1d222bc8;
 $white: #ffffff;
 $border: #708090;
@@ -75,7 +76,7 @@ body {
 
   &__grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     background-color: transparent;
   }
 
@@ -95,6 +96,33 @@ body {
 /// home  레이아웃 ///
 
 .home {
+  &__search-div {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__search {
+    @extend .post-form__input;
+    background-color: $backgroundLight;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    padding: 12px;
+    width: 100% !important;
+    font-size: 15px;
+    font-weight: 600;
+
+    &:focus {
+      border: 1px solid $promaryColor;
+      background-color: $activeBackground;
+    }
+  }
+
+  &__title-text {
+    margin-bottom: 20px;
+    margin-left: 6px;
+    font-size: 30px;
+  }
+
   &__top {
     @extend .transparent;
     @extend .sticky;
@@ -102,7 +130,7 @@ body {
 
   &__title {
     background-color: transparent;
-    width: 100%;
+    width: 90%;
     padding: 16px;
     font-weight: 700;
     font-size: 20px;
@@ -135,6 +163,44 @@ body {
 }
 
 .post-form {
+  &__input {
+    font-family: $font;
+    padding: 8px;
+    border: none;
+    resize: none;
+    outline: none;
+    margin-top: 8px;
+    width: calc(100% - 32px);
+  }
+
+  &__hashtags {
+    padding: 16px;
+    border-bottom: 1px solid $border;
+
+    &-outputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 1px;
+      align-items: center;
+    }
+
+    &-tag {
+      font-size: 14px;
+      border: 1px solid $promaryColor;
+      color: $promaryColor;
+      border-radius: 10px;
+      padding: 2px 8px;
+      margin-right: 6px;
+      cursor: pointer;
+
+      &:hover,
+      &:focus {
+        color: $activeBorder;
+        border-bottom: 1px solid $activeBorder;
+      }
+    }
+  }
+
   &__textarea {
     font-family: $font;
     min-height: 120px;

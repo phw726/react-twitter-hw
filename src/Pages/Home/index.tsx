@@ -1,7 +1,7 @@
 import PostForm from 'Component/posts/PostForm';
 import PostBox from 'Component/posts/PostBox';
 import { useContext, useEffect, useState } from 'react';
-import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import AuthContext from 'context/AuthContext';
 import { db } from 'firebaseApp';
 
@@ -15,6 +15,7 @@ export interface PostProps {
   likes?: string[];
   likeCount?: number;
   comments?: any;
+  hashTags?: string[];
 }
 
 export default function HomePage() {
