@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useContext, useState } from 'react';
 import { FiImage } from 'react-icons/fi';
 import { toast } from 'react-toastify';
+import useTranslation from 'Hook/useTranslation';
 
 export default function PostForm() {
   const [content, setContent] = useState<string>('');
@@ -14,6 +15,7 @@ export default function PostForm() {
   const [imageFile, setImageFile] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
 
   const handleFileUpload = (e: any) => {
     const {
@@ -111,7 +113,7 @@ export default function PostForm() {
         required
         name="content"
         id="content"
-        placeholder="What is happening?"
+        placeholder={t('POST_PLACEHOLDER')}
         onChange={onChange}
         value={content}
       />
@@ -129,7 +131,7 @@ export default function PostForm() {
           className="post-form__input"
           name="hashtag"
           id="hashtag"
-          placeholder="해시태그 + 스페이스바 입력"
+          placeholder={t('POST_HASHTAG')}
           onChange={onChangeHashTag}
           onKeyUp={handleKeyup}
           value={hashTag}
@@ -154,12 +156,12 @@ export default function PostForm() {
             <div className="post-form__attachment">
               <img src={imageFile} alt="attachment" width={100} height={100} />
               <button className="post-form__clear-btn" type="button" onClick={handleDeleteImage}>
-                Clear
+                {t('BUTTON_DELETE')}
               </button>
             </div>
           )}
         </div>
-        <input type="submit" value="Tweet" className="post-form__submit-btn" disabled={isSubmitting} />
+        <input type="submit" value={t('BUTTON_TWEET')} className="post-form__submit-btn" disabled={isSubmitting} />
       </div>
     </form>
   );

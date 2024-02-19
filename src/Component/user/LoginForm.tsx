@@ -1,3 +1,4 @@
+import useTranslation from 'Hook/useTranslation';
 import {
   signInWithEmailAndPassword,
   getAuth,
@@ -15,6 +16,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigate = useNavigate();
+  const t = useTranslation();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ export default function LoginForm() {
       const auth = getAuth(app);
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
-      toast.success('성공적으로 로그인되었습니다.');
+      toast.success(t('LOGIN_SUCCESS'));
     } catch (error: any) {
       toast.error(error?.code);
     }
@@ -38,7 +40,7 @@ export default function LoginForm() {
       const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
       if (!value?.match(validRegex)) {
-        setError('이메일 형식이 올바르지 않습니다.');
+        setError(t('LOGIN_EMAIL_ERROR'));
       } else {
         setError('');
       }
@@ -47,7 +49,7 @@ export default function LoginForm() {
     if (name === 'password') {
       setPassword(value);
       if (value?.length < 6) {
-        setError('비밀번호는 6자 이상이어야 합니다.');
+        setError(t('LOGIN_PASSWORD_ERROR'));
       } else {
         setError('');
       }
@@ -73,7 +75,7 @@ export default function LoginForm() {
     await signInWithPopup(auth, provider as GithubAuthProvider | GoogleAuthProvider)
       .then(result => {
         console.log(result);
-        toast.success('성공적으로 로그인 되었습니다.');
+        toast.success(t('LOGIN_SUCCESS'));
       })
       .catch(error => {
         console.log(error);
@@ -84,13 +86,13 @@ export default function LoginForm() {
 
   return (
     <form className="form form--lg" onSubmit={onSubmit}>
-      <div className="form__title">로그인</div>
+      <div className="form__title">{t('LOGIN')}</div>
       <div className="form__block">
-        <label htmlFor="email">이메일</label>
+        <label htmlFor="email">{t('FORM_EMAIL')}</label>
         <input type="text" name="email" id="email" value={email} required onChange={onChange} />
       </div>
       <div className="form__block">
-        <label htmlFor="password">비밀번호</label>
+        <label htmlFor="password">{t('FORM_PASSWORD')}</label>
         <input type="password" name="password" id="password" value={password} required onChange={onChange} />
       </div>
 
@@ -103,26 +105,26 @@ export default function LoginForm() {
       )}
 
       <div className="form__block">
-        계정이 없으신가요?
+        {t('NO_ACCOUNT')}
         <Link to="/user/signup" className="form__link">
-          회원가입 하기
+          {t('SIGNUP_LINK')}
         </Link>
       </div>
       <div className="form__block--lg">
         <button type="submit" className="form__btn--submit" disabled={error?.length > 0}>
-          로그인
+          {t('LOGIN')}
         </button>
       </div>
 
       {/* SNS로 로그인하기 */}
       <div className="form__block">
         <button type="button" className="form__btn--google" name="google" onClick={onClickSocialLogin}>
-          Google로 로그인
+          {t('LOGIN_WITH_GOOGLE')}
         </button>
       </div>
       <div className="form__block">
         <button type="button" className="form__btn--github" name="github" onClick={onClickSocialLogin}>
-          Github으로 로그인
+          {t('LOGIN_WITH_GITHUB')}
         </button>
       </div>
     </form>

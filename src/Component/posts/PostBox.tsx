@@ -1,7 +1,8 @@
 import FollowingBox from 'Component/Following/followingBox';
+import useTranslation from 'Hook/useTranslation';
 import { PostProps } from 'Pages/Home';
 import AuthContext from 'context/AuthContext';
-import { arrayRemove, arrayUnion, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { addDoc, arrayRemove, arrayUnion, collection, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { deleteObject, ref } from 'firebase/storage';
 import { db, storage } from 'firebaseApp';
 import { useContext } from 'react';
@@ -16,6 +17,10 @@ interface PostBoxProps {
 
 export default function PostBox({ post }: PostBoxProps) {
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
+  const truncate = (str: string) => {
+    return str?.length > 10 ? str?.substring(0, 10) + '...' : str;
+  };
 
   const navigate = useNavigate();
   const imageRef = ref(storage, post?.imageUrl);
@@ -36,6 +41,21 @@ export default function PostBox({ post }: PostBoxProps) {
         likes: arrayUnion(user?.uid),
         likeCount: post?.likeCount ? post?.likeCount + 1 : 1,
       });
+
+      //좋아요 알림 만들기
+      if (user?.uid !== post?.uid) {
+        await addDoc(collection(db, 'notifications'), {
+          createdAt: new Date()?.toLocaleDateString('ko', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }),
+          uid: post?.uid,
+          isRead: false,
+          url: `/posts/${post?.id}`,
+          content: `"${user?.email || user?.displayName}"님이 "${truncate(post?.content)}" 글을 좋아합니다.`,
+        });
+      }
     }
   };
 
@@ -99,11 +119,11 @@ export default function PostBox({ post }: PostBoxProps) {
         {user?.uid === post?.uid && (
           <>
             <button type="button" className="post__delete" onClick={handleDelete}>
-              Delete
+              {t('BUTTON_DELETE')}
             </button>
 
             <button type="button" className="post__edit">
-              <Link to={`/posts/edit/${post?.id}`}>Edit</Link>
+              <Link to={`/posts/edit/${post?.id}`}>{t('BUTTON_EDIT')}</Link>
             </button>
           </>
         )}
