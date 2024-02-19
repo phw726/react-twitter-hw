@@ -5,6 +5,7 @@ import { db } from 'firebaseApp';
 import { useContext } from 'react';
 import { toast } from 'react-toastify';
 import styles from './Comment.module.scss';
+import useTranslation from 'Hook/useTranslation';
 
 export interface CommentProps {
   comment: string;
@@ -20,6 +21,7 @@ export interface CommentBoxProps {
 
 export default function CommentBox({ data, post }: CommentBoxProps) {
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
 
   const handleDeletComment = async () => {
     if (post) {
@@ -29,7 +31,7 @@ export default function CommentBox({ data, post }: CommentBoxProps) {
           comments: arrayRemove(data),
         });
 
-        toast.success('댓글을 삭제했습니다.');
+        toast.success(t('DELETE_COMMENT'));
       } catch (e) {
         console.log(e);
       }
@@ -51,7 +53,7 @@ export default function CommentBox({ data, post }: CommentBoxProps) {
         <div className={styles.comment__submitDiv}>
           {data?.uid === user?.uid && (
             <button type="button" className="comment__delete-btn" onClick={handleDeletComment}>
-              삭제
+              {t('BUTTON_DELETE')}
             </button>
           )}
         </div>

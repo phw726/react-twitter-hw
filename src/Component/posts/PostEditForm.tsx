@@ -86,7 +86,7 @@ export default function PostEditForm() {
           imageUrl: imageUrl,
         });
         navigate(`/posts/${post?.id}`);
-        toast.success('게시글을 수정했습니다.');
+        toast.success(t('EDIT_POST'));
         setIsSubmitting(false);
         setImageFile(null);
       }
@@ -148,7 +148,7 @@ export default function PostEditForm() {
         required
         name="content"
         id="content"
-        placeholder="What is happening?"
+        placeholder={t('POST_PLACEHOLDER')}
         onChange={onChange}
         value={content}
       />

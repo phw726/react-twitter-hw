@@ -67,12 +67,23 @@ const TRANSLATIONS = {
     en: 'Tweet',
   },
 
+  BUTTON_PROFILE: {
+    ko: '프로필 수정',
+    en: 'Edit Profile',
+  },
+
   // post
 
   NO_POSTS: {
     ko: '게시글이 없습니다.',
     en: 'No Posts',
   },
+
+  EDIT_POST: {
+    ko: '게시글을 수정했습니다.',
+    en: 'Your Post was successfully edited',
+  },
+
   POST_PLACEHOLDER: {
     ko: '내용을 입력해주세요.',
     en: 'What is happening?',
@@ -88,6 +99,33 @@ const TRANSLATIONS = {
   NAME_PLACEHOLDER: {
     ko: '이름',
     en: 'Name',
+  },
+
+  DELETE_POST_CONFIRM: {
+    ko: '해당 게시글을 삭제하시겠습니까?',
+    en: 'Are you sure you want to delete this post? ',
+  },
+
+  DELETE_POST: {
+    ko: '게시글을 삭제했습니다.',
+    en: 'Your Post was successfully deleted ',
+  },
+
+  ADD_POST: {
+    ko: '게시글을 생성했습니다.',
+    en: 'Your Post was successfully added',
+  },
+
+  // comment
+
+  DELETE_COMMENT: {
+    ko: '댓글을 삭제했습니다.',
+    en: 'Your Comment was successfully deleted ',
+  },
+
+  ADD_COMMENT: {
+    ko: '댓글을 생성했습니다.',
+    en: 'Your Comment was successfully added',
   },
 
   // tabs
@@ -128,6 +166,25 @@ const TRANSLATIONS = {
     ko: '알림이 없습니다.',
     en: 'No Notifications',
   },
+
+  // NOTIFICATIONS_FOLLOWING: {
+  //   ko: '님이 팔로우를 했습니다.',
+  //   en: 'is following you',
+  // },
+
+  NOTIFICATIONS_FOLLOW: {
+    ko: '해당 사용자를 팔로우합니다.',
+    en: 'Followed',
+  },
+
+  NOTIFICATIONS_UNFOLLOW: {
+    ko: '해당 사용자를 언팔로우합니다.',
+    en: 'Unfollowed',
+  },
+
+  // NOTIFICATIONS_LIKES: {},
+
+  // NOTIFICATIONS_COMMENT: {},
 
   //signup, signin
 
@@ -228,10 +285,11 @@ const TRANSLATIONS = {
     en: 'Back',
   },
 
-  // COMMENT_SUCCESS: {
-  //   ko: '댓글을 생성했습니다.',
-  //   en: 'You have successfully logged out',
-  // },
-};
+  // profile
 
+  PROFILE_EDIT: {
+    ko: '프로필이 성공적으로 업데이트 되었습니다.',
+    en: 'Your profile was successfully updated',
+  },
+};
 export default TRANSLATIONS;

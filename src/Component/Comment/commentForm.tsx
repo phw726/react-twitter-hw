@@ -1,3 +1,4 @@
+import useTranslation from 'Hook/useTranslation';
 import { PostProps } from 'Pages/Home';
 import AuthContext from 'context/AuthContext';
 import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore';
@@ -12,6 +13,7 @@ export interface CommentFormProps {
 export default function CommentForm({ post }: CommentFormProps) {
   const [comment, setComment] = useState<string>('');
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
 
   const truncate = (str: string) => {
     return str?.length > 10 ? str?.substring(0, 10) + '...' : str;
@@ -54,7 +56,7 @@ export default function CommentForm({ post }: CommentFormProps) {
         });
       }
 
-      toast.success('댓글을 생성했습니다.');
+      toast.success(t('ADD_COMMENT'));
       setComment('');
 
       try {
@@ -80,7 +82,7 @@ export default function CommentForm({ post }: CommentFormProps) {
         className="post-form__textarea"
         name="comment"
         id="comment"
-        placeholder="What is happening"
+        placeholder={t('POST_PLACEHOLDER')}
         required
         onChange={onChange}
         value={comment}

@@ -61,7 +61,7 @@ export default function PostForm() {
       setTags([]);
       setHashTag('');
       setContent('');
-      toast.success('게시글을 생성했습니다.');
+      toast.success(t('ADD_POST'));
       setImageFile(null);
       setIsSubmitting(false);
     } catch (e: any) {

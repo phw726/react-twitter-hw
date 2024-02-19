@@ -41,13 +41,13 @@ export default function FollowingBox({ post }: FollowingProps) {
             minute: '2-digit',
             second: '2-digit',
           }),
-          content: `${user?.email || user?.displayName}님이 팔로우를 했습니다.`,
+          content: `${user?.email || user?.displayName} 님이 팔로우를 했습니다.`,
           url: '#',
           isRead: false,
           uid: post?.uid,
         });
 
-        toast.success('해당 사용자를 팔로우합니다.');
+        toast.success(t('NOTIFICATIONS_FOLLOW'));
       }
     } catch (e) {
       console.log(e);
@@ -68,7 +68,7 @@ export default function FollowingBox({ post }: FollowingProps) {
           users: arrayRemove({ id: user?.uid }),
         });
 
-        toast.success('팔로우를 취소했습니다.');
+        toast.success(t('NOTIFICATIONS_UNFOLLOW'));
       }
     } catch (e) {
       console.log(e);

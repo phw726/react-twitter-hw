@@ -1,3 +1,4 @@
+import useTranslation from 'Hook/useTranslation';
 import AuthContext from 'context/AuthContext';
 import { updateProfile } from 'firebase/auth';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
@@ -16,6 +17,7 @@ export default function ProfileEdit() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {
@@ -57,7 +59,7 @@ export default function ProfileEdit() {
           photoURL: newImageUrl || '',
         })
           .then(() => {
-            toast.success('프로필이 성공적으로 업데이트 되었습니다.');
+            toast.success(t('PROFILE_EDIT'));
             navigate('/profile');
           })
           .catch(error => {
@@ -101,7 +103,7 @@ export default function ProfileEdit() {
       <div className="post__header">
         <button type="button" onClick={() => navigate(-1)}>
           <IoIosArrowBack className="post__header-btn" />
-          <div className="post__header-text">뒤로가기</div>
+          <div className="post__header-text">{t('BACK')}</div>
         </button>
       </div>
 
@@ -139,7 +141,7 @@ export default function ProfileEdit() {
               onChange={handleFileUpload}
               className="hidden"
             />
-            <input type="submit" value="프로필수정" className="post-form__submit-btn" />
+            <input type="submit" value={t('BUTTON_PROFILE')} className="post-form__submit-btn" />
           </div>
         </div>
       </form>
