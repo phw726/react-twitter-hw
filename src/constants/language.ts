@@ -117,6 +117,12 @@ const TRANSLATIONS = {
     en: 'Search Hashtags',
   },
 
+  //!!!!!!!!!!!!!!!!!!!!!!!!! 태그 에러가 안먹힘//
+  HASHTAG_ERROR: {
+    ko: '이미 존재하는 태그입니다.',
+    en: 'The tag already exists',
+  },
+
   // notifications
   NO_NOTIFICATIONS: {
     ko: '알림이 없습니다.',
@@ -215,6 +221,11 @@ const TRANSLATIONS = {
   LOGOUT_SUCCESS: {
     ko: '성공적으로 로그아웃 되었습니다',
     en: 'You have successfully logged out',
+  },
+
+  BACK: {
+    ko: '뒤로가기',
+    en: 'Back',
   },
 
   // COMMENT_SUCCESS: {

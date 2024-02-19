@@ -34,8 +34,6 @@ export default function NotificationsPage() {
     }
   }, [user]);
 
-  console.log(notifications);
-
   return (
     <div className="home">
       <div className="home__top">

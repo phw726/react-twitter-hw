@@ -8,11 +8,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
 import CommentForm from 'Component/Comment/commentForm';
 import CommentBox, { CommentProps } from 'Component/Comment/CommentBox';
+import useTranslation from 'Hook/useTranslation';
 
 export default function PostDetailPage() {
   const params = useParams();
   const [post, setPost] = useState<PostProps | null>(null);
   const navigate = useNavigate();
+  const t = useTranslation();
 
   const getPost = useCallback(async () => {
     if (params.id) {
@@ -36,7 +38,7 @@ export default function PostDetailPage() {
       <div className="post__header">
         <button type="button" onClick={() => navigate(-1)}>
           <IoIosArrowBack className="post__header-btn" />
-          <div className="post__header-text">뒤로가기</div>
+          <div className="post__header-text">{t('BACK')}</div>
         </button>
       </div>
       {post ? (

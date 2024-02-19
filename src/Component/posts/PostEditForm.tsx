@@ -9,6 +9,7 @@ import { IoIosArrowBack } from 'react-icons/io';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 import AuthContext from 'context/AuthContext';
 import { v4 as uuidv4 } from 'uuid';
+import useTranslation from 'Hook/useTranslation';
 
 export default function PostEditForm() {
   const params = useParams();
@@ -20,6 +21,7 @@ export default function PostEditForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
+  const t = useTranslation();
 
   const handleFileUpload = (e: any) => {
     const {
@@ -119,7 +121,7 @@ export default function PostEditForm() {
       // 만약 같은 태그가 있다면 에러 (32=스페이스바)
 
       if (tags?.includes(e.target.value?.trim())) {
-        toast.error('이미 존재하는 태그입니다.');
+        toast.error(t('HASHTAG_ERROR'));
       } else {
         // 아니면 태그를 생성
 
@@ -138,7 +140,7 @@ export default function PostEditForm() {
       <div className="post__header">
         <button type="button" onClick={() => navigate(-1)}>
           <IoIosArrowBack className="post__header-btn" />
-          <div className="post__header-text">뒤로가기</div>
+          <div className="post__header-text">{t('BACK')}</div>
         </button>
       </div>
       <textarea
@@ -164,7 +166,7 @@ export default function PostEditForm() {
           className="post-form__input"
           name="hashtag"
           id="hashtag"
-          placeholder="해시태그 + 스페이스바 입력"
+          placeholder={t('POST_HASHTAG')}
           onChange={onChangeHashTag}
           onKeyUp={handleKeyup}
           value={hashTag}
@@ -195,7 +197,7 @@ export default function PostEditForm() {
           )}
         </div>
 
-        <input type="submit" value="수정" className="post-form__submit-btn" disabled={isSubmitting} />
+        <input type="submit" value={t('BUTTON_EDIT')} className="post-form__submit-btn" disabled={isSubmitting} />
       </div>
     </form>
   );
