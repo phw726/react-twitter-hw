@@ -1,6 +1,6 @@
 import { PostProps } from 'Pages/Home';
 import AuthContext from 'context/AuthContext';
-import { arrayRemove, arrayUnion, doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
+import { addDoc, arrayRemove, arrayUnion, collection, doc, onSnapshot, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from 'firebaseApp';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -30,6 +30,20 @@ export default function FollowingBox({ post }: FollowingProps) {
         //팔로우 당하는 사람이 주체가되어 팔로우 컬렉션 생성 또는 업데이트
         const followerRef = doc(db, 'follower', post?.uid);
         await setDoc(followerRef, { users: arrayUnion({ id: user?.uid }) }, { merge: true });
+
+        // 팔로잉 알림 생성
+
+        await addDoc(collection(db, 'notifications'), {
+          createdAt: new Date()?.toLocaleDateString('ko', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+          }),
+          content: `${user?.email || user?.displayName}님이 팔로우를 했습니다.`,
+          url: '#',
+          isRead: false,
+          uid: post?.uid,
+        });
 
         toast.success('해당 사용자를 팔로우합니다.');
       }
